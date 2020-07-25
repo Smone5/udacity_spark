@@ -3,7 +3,7 @@ from datetime import datetime
 import os
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import udf, col
-from pyspark.sql.functions import to_timestamp, from_unixtime
+from pyspark.sql.functions import to_timestamp, from_unixtime, to_date
 from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, date_format
 from pyspark.sql.types import StructType as R, StructField as Fld, DoubleType as Dbl, StringType as Str, IntegerType as Int, DateType as Date
 
@@ -186,7 +186,7 @@ def process_log_data(spark, input_data, output_data):
     # write songplays table to parquet files partitioned by year and month
     songplays_table = songplays_table.repartition( year(songplays_table.start_time),month(songplays_table.start_time))
     
-    songsplay_output = output_data+"time_table/time_table.parquet"
+    songsplay_output = output_data+"songplays_table/songplays_table.parquet"
     songplays_table.write.parquet(songsplay_output)
     
     
